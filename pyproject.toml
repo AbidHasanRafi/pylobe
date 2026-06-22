@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name            = "pylobe"
+version         = "0.1.0"
+description     = "Professional antenna design and electromagnetic simulation package"
+readme          = "README.md"
+license         = {text = "MIT"}
+requires-python = ">=3.10"
+authors         = [{name = "Md. Abid Hasan Rafi"}]
+keywords        = [
+    "antenna", "electromagnetics", "microwave", "FDTD", "MoM",
+    "patch antenna", "dipole", "array", "optimization", "phased-array",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    # Core scientific stack — always required
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "matplotlib>=3.7",
+    "tqdm>=4.65",
+    # Optional features available via extras:
+    #   pip install pylobe[vis]    → plotly, kaleido, Pillow
+    #   pip install pylobe[cad]    → ezdxf, gdspy
+    #   pip install pylobe[report] → reportlab
+    #   pip install pylobe[ai]     → torch, scikit-learn
+    #   pip install pylobe[full]   → everything above
+]
+
+[project.optional-dependencies]
+# Interactive + publication-quality static visualisation
+vis = [
+    "plotly>=5.18",
+    "Pillow>=10.0",
+    "kaleido>=0.2",   # required for export_fig() to save Plotly figs as PNG/PDF/SVG
+]
+
+# CAD export (DXF, GDSII, STL)
+cad = [
+    "ezdxf>=1.1",
+    "gdspy>=1.6",
+]
+
+# PDF reporting
+report = [
+    "reportlab>=4.0",
+]
+
+# AI / neural surrogate
+ai = [
+    "torch>=2.1",
+    "scikit-learn>=1.3",
+]
+
+# Install everything
+full = [
+    "pylobe[vis]",
+    "pylobe[cad]",
+    "pylobe[report]",
+    "pylobe[ai]",
+]
+
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "black>=23.9",
+    "isort>=5.12",
+    "mypy>=1.6",
+    "ruff>=0.1",
+]
+docs = [
+    "sphinx>=7.2",
+    "sphinx-rtd-theme>=1.3",
+    "nbsphinx>=0.9",
+    "myst-parser>=2.0",
+]
+
+[project.urls]
+Homepage   = "https://github.com/pylobe/pylobe"
+Repository = "https://github.com/pylobe/pylobe"
+Issues     = "https://github.com/pylobe/pylobe/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pylobe*"]
+
+[tool.black]
+line-length    = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.isort]
+profile     = "black"
+line_length = 100
+
+[tool.ruff]
+line-length = 100
+select      = ["E", "F", "W", "I"]
+ignore      = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+addopts      = "-v --tb=short"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
+[tool.mypy]
+python_version  = "3.10"
+ignore_missing_imports = true
