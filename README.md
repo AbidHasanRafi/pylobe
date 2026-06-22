@@ -41,7 +41,7 @@ PyLobe covers the full antenna engineering workflow — from a frequency + subst
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/pylobe.git
+git clone https://github.com/abidhasanrafi/pylobe.git
 cd pylobe
 pip install -e ".[full]"
 ```
